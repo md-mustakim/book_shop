@@ -60,6 +60,7 @@ class InvoiceController extends Controller
             'total_price' => $total_price,
             'getaway' => $request->input('getaway'),
             'address' => $request->input('address'),
+            'order_id' => rand(100000, 999999)
         );
 
         Invoice::create($attributes);

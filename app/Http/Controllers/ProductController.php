@@ -59,10 +59,9 @@ class ProductController extends Controller
         }
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $name = time().'.'.$image->getClientOriginalExtension();
+            $name = time() . '.' . $image->getClientOriginalExtension();
             $destinationPath = public_path('/images');
             $image->move($destinationPath, $name);
-
         }
 
         $product = new Product;
@@ -96,7 +95,7 @@ class ProductController extends Controller
         return view('product.edit', ['product' => $product, 'category' => Category::all()]);
     }
 
-    public function update(Request $request, Product $product, $id)
+    public function update(Request $request, Product $product)
     {
         $attribute = $request->validate([
             'book_name' => 'required',
@@ -106,15 +105,15 @@ class ProductController extends Controller
             'price' => 'required',
             'category_id' => 'required',
         ]);
-        $product = Product::findOrFail($id);
+        //$product = Product::findOrFail($id);
         $product->update($attribute);
-        return redirect()->route('book.edit', $id)->with('message', 'Update Success');
+        return redirect()->route('homePage')->with('message', 'Update Success');
     }
 
 
     public function destroy($id)
     {
         Product::destroy($id);
-        return redirect()->route('book.index')->with('delete', 'Delete Success');
+        return redirect()->route('homePage')->with('delete', 'Delete Success');
     }
 }
